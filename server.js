@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const db = require('./db/db');
+const uuid = require('./helpers/uuid');
+const filterObj = require('./helpers/filterObj');
 
 const PORT = process.env.PORT || 3001;
 
@@ -37,6 +39,7 @@ app.post('/api/notes', (req, res) => {
       const newNote = {
         title,
         text,
+        id: uuid(),
       };
 
     fs.readFile(`./db/db.json`,'utf8', (err, data) => {
@@ -50,9 +53,7 @@ app.post('/api/notes', (req, res) => {
             fs.writeFile(`./db/db.json`, noteString, (err) =>
                 err
                 ? console.error(err)
-                : console.log(
-                    `New note has been written to JSON file`
-                )
+                : console.log(`New note has been written to JSON file`)
             );
         }
     });
@@ -70,11 +71,27 @@ app.post('/api/notes', (req, res) => {
   });
 
   app.delete(`/api/notes/:id`, (req,res) =>{
-    console.info(`${req.method} request received to add a note`);
-    console.log(req.params);
+    console.info(`${req.method} request received to remove a note`);
+
+    fs.readFile(`./db/db.json`,'utf8', (err, data) => {
+      if (err){
+          console.log(err)
+      }else{
+          const noteString = JSON.stringify(filterObj(JSON.parse(data), req.params.id), null, 4);
+
+          fs.writeFile(`./db/db.json`, noteString, (err) =>
+              err
+              ? console.error(err)
+              : console.log(
+                  `note ${req.params.id} has been deleted from JSON file`
+              )
+          );
+      }
+  });
   })
 
 
 
 
 app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT} 🚀`));
+
