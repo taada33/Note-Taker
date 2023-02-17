@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-// const db = require('./db/db');
+// const db = require('./db/notes');
 const uuid = require('./helpers/uuid');
 const filterObj = require('./helpers/filterObj');
 
@@ -23,8 +23,7 @@ app.get('/notes', (req, res) =>
 );
 
 app.get('/api/notes', (req, res) => {
-    // res.status(200).json(db);
-    fs.readFile('./db/db.json', `utf8`, (err, data) =>{
+    fs.readFile('./db/notes.json', `utf8`, (err, data) =>{
       err 
       ? console.log(err)
       : res.status(200).json(data);
@@ -51,7 +50,7 @@ app.post('/api/notes', (req, res) => {
         id: uuid(),
       };
 
-    fs.readFile(`./db/db.json`,'utf8', (err, data) => {
+    fs.readFile(`./db/notes.json`,'utf8', (err, data) => {
         if (err){
             console.log(err)
         }else{
@@ -59,7 +58,7 @@ app.post('/api/notes', (req, res) => {
             parsedData.push(newNote);
             const noteString = JSON.stringify(parsedData, null, 4);
 
-            fs.writeFile(`./db/db.json`, noteString, (err) =>
+            fs.writeFile(`./db/notes.json`, noteString, (err) =>
                 err
                 ? console.error(err)
                 : console.log(`New note has been written to JSON file`)
@@ -82,13 +81,13 @@ app.post('/api/notes', (req, res) => {
   app.delete(`/api/notes/:id`, (req,res) =>{
     console.info(`${req.method} request received to remove a note`);
 
-    fs.readFile(`./db/db.json`,'utf8', (err, data) => {
+    fs.readFile(`./db/notes.json`,'utf8', (err, data) => {
       if (err){
           console.log(err)
       }else{
           const noteString = JSON.stringify(filterObj(JSON.parse(data), req.params.id), null, 4);
 
-          fs.writeFile(`./db/db.json`, noteString, (err) =>
+          fs.writeFile(`./db/notes.json`, noteString, (err) =>
               err
               ? console.error(err)
               : console.log(
