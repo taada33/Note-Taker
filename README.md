@@ -23,6 +23,8 @@ Simply navigate to (https://note-taker-taa.herokuapp.com/)[https://note-taker-ta
 
 ## Usage
 
+![Website Screenshot](assets/images/screenshot.png)
+
 Click the "+" icon to add a new note. You can enter a note title, as well as some text. Notes can be saved by clicking the save icon, next to the "+". Saved notes are located on the left of the screen, these can be examined by clicking on them or deleted by clicking on the "bin" icon.
     
 ## Contributing
