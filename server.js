@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const db = require('./db/db');
+// const db = require('./db/db');
 const uuid = require('./helpers/uuid');
 const filterObj = require('./helpers/filterObj');
 
@@ -23,8 +23,17 @@ app.get('/notes', (req, res) =>
 );
 
 app.get('/api/notes', (req, res) => {
-    res.status(200).json(db);
+    // res.status(200).json(db);
+    fs.readFile('./db/db.json', `utf8`, (err, data) =>{
+      err 
+      ? console.log(err)
+      : res.status(200).json(data);
+    })
   });
+
+  app.get('/*', (req, res) =>
+  res.redirect('/')
+);
 
 app.post('/api/notes', (req, res) => {
     // Log that a POST request was received
@@ -88,6 +97,14 @@ app.post('/api/notes', (req, res) => {
           );
       }
   });
+
+  const response = {
+    status: 'success',
+    body: {id: req.params.id},
+  };
+
+  console.log(response);
+  res.status(201).json(response);
   })
 
 
