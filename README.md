@@ -19,7 +19,7 @@ The Note-Taker application can be used to write and save notes.
 
 ## Installation
 
-Simply navigate to (https://note-taker-taa.herokuapp.com/)[https://note-taker-taa.herokuapp.com/] to use this application.
+Simply navigate to https://note-taker-taa.herokuapp.com/ to use this application.
 
 ## Usage
 
