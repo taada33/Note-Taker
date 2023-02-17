@@ -97,7 +97,7 @@ const handleNoteDelete = (e) => {
 // Sets the activeNote and displays it
 const handleNoteView = (e) => {
   e.preventDefault();
-  if(e.target.parentElement.getAttribute('data-note') !== NULL){
+  if(e.target.parentElement.getAttribute('data-note') !== null){
     activeNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
     renderActiveNote();
   }
